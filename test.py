@@ -1,3 +1,5 @@
+#This file is used for testing out portions to be added to amin code
+
 import nmap3, sys
 
 def host_up(host, nmap):
