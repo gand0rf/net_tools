@@ -29,9 +29,9 @@ def service_version(host, ports):
         result = nmap3.Nmap().nmap_version_detection(host, args=f'-p {port}')
         if "product" in result[host]["ports"][0]["service"].keys():
             if "version" in result[host]["ports"][0]["service"].keys(): 
-                print(f'\t{port} - {result[host]["ports"][0]["service"]["product"]} - {result[host]["ports"][0]["service"]["version"]}\n')
+                print(f'\t{port} - {result[host]["ports"][0]["service"]["product"]} - {result[host]["ports"][0]["service"]["version"]}')
             else:
-                print(f'\t{port} - {result[host]["ports"][0]["service"]["product"]}\n')
+                print(f'\t{port} - {result[host]["ports"][0]["service"]["product"]}')
         else:
             print(f'\t{port} - Unable to identify service on port')
 
@@ -68,13 +68,22 @@ if result == 0:
 print('\nScanning host for ports...')
 ports = port_scan_top(host, nmap)
 if ports == 0:
+    print('No ports open')
     exit()
 
 print('\nFinding port versions...')
 service_version(host, ports)
- 
-print('\nSeareching for info...')
-for port in ports:
-    info_search(host, port, nmap)
-    
+
+service_ports = ['21','443']
+
+if "21" in ports or "443" in ports:
+    print('\nSeareching for info...')
+    for port in ports:
+        match port:
+            case port_num if port_num in service_ports:
+                info_search(host, port, nmap)
+#            case '443':
+#                info_search(host, port, nmap)
+            
+print('\nScan completed')
 
