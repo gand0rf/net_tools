@@ -28,10 +28,10 @@ def service_version(host, ports):
     for port in ports:
         result = nmap3.Nmap().nmap_version_detection(host, args=f'-p {port}')
         if "product" in result[host]["ports"][0]["service"].keys():
-            if "varsion" in result[host]["ports"][0]["service"].keys(): 
-                print(f'\t{port} - {result[host]["ports"][0]["service"]["product"]} - {result[host]["ports"][0]["service"]["version"]} ')
+            if "version" in result[host]["ports"][0]["service"].keys(): 
+                print(f'\t{port} - {result[host]["ports"][0]["service"]["product"]} - {result[host]["ports"][0]["service"]["version"]}\n')
             else:
-                print(f'\t{port} - {result[host]["ports"][0]["service"]["product"]}')
+                print(f'\t{port} - {result[host]["ports"][0]["service"]["product"]}\n')
         else:
             print(f'\t{port} - Unable to identify service on port')
 
