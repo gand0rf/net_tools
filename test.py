@@ -27,7 +27,6 @@ def service_version(host, ports):
     for port in ports:
         result = nmap3.Nmap().nmap_version_detection(host, args=f'-p {port}')
         if "product" in result[host]["ports"][0]["service"]:
-            print(result[host]["ports"][0]["service"]["product"])
         else:
             print("No product id'ed")
 
