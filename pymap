@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import socket
 import sys
-from scan_tools import nmap_calls
+from scan_tools import nmap_calls, html_scan
 
 host = sys.argv[1]
 
@@ -21,14 +21,19 @@ if ports == 0:
 print('\nFinding port versions...')
 nmap_calls.service_version(host, ports)
 
-service_ports = ['21','443']
+service_ports = ['21','80','443']
 
-if "21" in ports or "443" in ports:
+if "21" in ports or "443" in ports or "80" in ports:
     print('\nSeareching for info...')
     for port in ports:
         match port:
             case port_num if port_num in service_ports:
                 nmap_calls.info_search(host, port)
-            
+
+if "80" in ports:
+    switchs = input('\nEnter any switchs to add to dicrectory scan: ')
+    print('\nAttempting to scan port 80...')
+    html_scan.basic_scan(host, switchs)
+
 print('\nScan completed')
 
